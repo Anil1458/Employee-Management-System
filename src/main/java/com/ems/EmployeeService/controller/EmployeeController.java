@@ -3,6 +3,7 @@ package com.ems.EmployeeService.controller;
 import com.ems.EmployeeService.model.EmployeeDTO;
 import com.ems.EmployeeService.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -46,6 +47,12 @@ public class EmployeeController {
     public ResponseEntity<Void> deleteEmployeeHandler(@PathVariable String id) {
         employeeService.deleteEmployee(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping(value = "/getPage")
+    public ResponseEntity<Page<EmployeeDTO>> getPaginatedEmployeeHandler(@RequestParam(defaultValue = "0") int page,
+                                                                  @RequestParam(defaultValue = "10")  int size){
+        return new ResponseEntity<>(employeeService.getPaginatedEmployee(page, size), HttpStatus.CREATED);
     }
 
 }

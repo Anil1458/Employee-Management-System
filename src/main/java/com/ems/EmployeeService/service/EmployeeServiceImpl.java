@@ -7,6 +7,9 @@ import com.ems.EmployeeService.model.EmployeeDTO;
 import com.ems.EmployeeService.repo.EmployeeRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -56,6 +59,13 @@ public class EmployeeServiceImpl implements EmployeeService{
     @Override
     public void deleteEmployee(String id) {
         employeeRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<EmployeeDTO> getPaginatedEmployee(int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Page<Employee> employeePage = employeeRepository.findAll(pageRequest);
+        return employeePage.map(EmployeeMapper.mapperInstance::toDTO);
     }
 
 
