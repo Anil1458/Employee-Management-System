@@ -51,8 +51,9 @@ public class EmployeeController {
 
     @GetMapping(value = "/getPage")
     public ResponseEntity<Page<EmployeeDTO>> getPaginatedEmployeeHandler(@RequestParam(defaultValue = "0") int page,
-                                                                  @RequestParam(defaultValue = "10")  int size){
-        return new ResponseEntity<>(employeeService.getPaginatedEmployee(page, size), HttpStatus.CREATED);
+                                                                  @RequestParam(defaultValue = "10")  int size,
+                                                                         @RequestParam(defaultValue = "id") String sortBy){
+        return new ResponseEntity<>(employeeService.getPaginatedEmployee(page, size, sortBy), HttpStatus.CREATED);
     }
 
 }
